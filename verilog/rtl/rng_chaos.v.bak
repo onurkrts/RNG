@@ -1,0 +1,164 @@
+// chaos.v
+
+/*------------------------------------------------------------------------\
+| Piecewise Digital Chaos Generator                                       |
+| Verilog HDL                                                             |
+|                                                                         |
+| M. Affan Zidan, A. G. Radwan and K. N. Salama                           |
+| Sensors Lab - KAUST                                                     |
+| mohammed.zidan@kaust.edu.sa                                             |
+|                                                                         |
+| Created: Sept 7, 2010                                                   |
+| Last Modified: Mar 22, 2012                                             |
+\------------------------------------------------------------------------*/
+
+/*------------------------------------------------------------------------\
+| Copyright (c) 2011, M. Affan Zidan, A. G. Radwan and K. N. Salama       |
+| King Abdullah University of Science and Technology                      |
+| All rights reserved.                                                    |
+|                                                                         |
+| Redistribution and use in source and binary forms, with or without      |
+| modification, are permitted provided that the following conditions are  |
+| met:                                                                    |
+|     * Redistributions of source code must retain the above copyright    |
+|       notice, this list of conditions and the following disclaimer.     |
+|     * Redistributions in binary form must reproduce the above copyright |
+|       notice, this list of conditions and the following disclaimer in   |
+|       the documentation and/or other materials provided with the        |
+|       distribution                                                      |
+|     * Neither the name of the King Abdullah University of Science and   |
+|       Technology (KAUST) nor the names of its contributors may be used  |
+|       to endorse or promote products derived from this software without |
+|       specific prior written permission.                                |
+|                                                                         |
+| THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS     |
+| "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT           |
+| NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS   |
+| FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE          |
+| COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECtime,            |
+| INDIRECtime, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES   |
+| (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR      |
+| SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)      |
+| HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACtime,  |
+| STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)  ARISING  |
+| IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE      |
+| POSSIBILITY OF SUCH DAMAGE.                                             |
+\------------------------------------------------------------------------*/
+
+/*-------------------------------------------------------------------------
+---------------------------------------------------------------------------
+Feel free to use/modify these codes as you see fit. Any publications 
+(codes, papers, technical reports,..) in which our codes (in their original
+or a modified format) have been used should  should cite the following 
+references.
+
+References:
+------------
+
+[1]	M. A. Zidan, A. G. Radwan, and K. N. Salama, â€œRandom Number Generation
+	Based on Digital Differential Chaos, â€?IEEE International Midwest 
+	Symposium on Circuits and Systems (MWSCAS), Seoul, South Korea, 2011
+ 	
+[2]	M. A. Zidan, A. G. Radwan, and K. N. Salama, â€œThe Effect of Numerical 
+	Techniques on Differential Equation Based Chaotic Generators,â€?IEEE 
+	International Conference on Microelectronics (ICM), Tunisia, 2011
+
+---------------------------------------------------------------------------
+
+System Equations:
+-----------------
+x_dot = y
+y_dot = z
+z_dot = -z-y * B(y) - x
+
+B(y) = a, if    y >= 1
+       0, else
+
+Constants:
+----------
+a = 4
+
+Initial conditions:
+-------------------
+x(0) = 0
+y(0) = 1
+z(0) = 0 
+---------------------------------------------------------------------------
+-------------------------------------------------------------------------*/
+
+
+///////////////////////////////////////////////////////////////////////////
+// Main Module ////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////
+
+module rng_chaos (
+input clk_i, 
+input rst_ni, 
+output reg x, 
+output reg y, 
+output reg z);
+
+// Parameters
+localparam WIDTH = 32;     // <-------------- Bus Width        
+localparam INT_WIDTH = 10; // <-------------- Int Width
+localparam STEP_SHIFT = 6; // <-- 1/h = 2 ^ -STEP_SHIFT
+
+
+///////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////
+
+// Please don't change bellow here
+
+///////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////
+
+localparam FRAC_WIDTH = WIDTH - INT_WIDTH;
+localparam INITIAL = { {INT_WIDTH-1{1'b0}}, 1'b1, {FRAC_WIDTH{1'b0}} };
+
+// state Reg
+// reg [WIDTH-1:0] x;
+// reg [WIDTH-1:0] y;
+// reg [WIDTH-1:0] z;
+
+
+// wires
+wire [WIDTH-1:0] xn;
+wire [WIDTH-1:0] yn;
+wire [WIDTH-1:0] zn;
+
+// intermediate
+wire en;
+wire [WIDTH-1:0] by;
+wire [WIDTH-1:0] zd;
+
+// -------- ///////////////////////////////////////////////////////////////
+
+assign en = (~y[WIDTH-1])  &  (|y[WIDTH-2:FRAC_WIDTH]);
+
+assign by = ({WIDTH{en}})  &  ({y[WIDTH-3:0],2'b0});
+
+assign zd = z+x+by;
+
+// 
+assign xn = x + {{STEP_SHIFT{ y[WIDTH-1]}},  y[WIDTH-1:STEP_SHIFT]};
+assign yn = y + {{STEP_SHIFT{ z[WIDTH-1]}},  z[WIDTH-1:STEP_SHIFT]};
+assign zn = z - {{STEP_SHIFT{zd[WIDTH-1]}}, zd[WIDTH-1:STEP_SHIFT]};
+
+///////////////////////////////////////////////////////////////////////////
+// FSM ////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////
+always @(posedge clk_i) begin
+	if(!rst_ni) begin
+		x <= 32'h0;
+		y <= INITIAL;
+		z <= 32'h0;
+	end else begin
+		x <= xn;
+		y <= yn;
+		z <= zn;
+	end	
+end
+
+endmodule
