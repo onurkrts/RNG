@@ -95,8 +95,8 @@ module user_proj_example #(
     assign rst = (~la_oenb[97]) ? la_data_in[97]: wb_rst_i;
 
     rng_chaos rng_chaos(
-        .clk_i(clk),
-        .rst_ni(rst),
+        .clk(clk),
+        .rst(rst),
 		.x(x),
 		.y(y),
 		.z(z)
@@ -196,8 +196,8 @@ z(0) = 0
 ///////////////////////////////////////////////////////////////////////////
 
 module rng_chaos (
-input	 			clk_i, 
-input 				rst_ni, 
+input	 			clk, 
+input 				rst, 
 output reg [31:0]	x, 
 output reg [31:0]	y, 
 output reg [31:0]	z);
@@ -253,8 +253,8 @@ assign zn = z - {{STEP_SHIFT{zd[WIDTH-1]}}, zd[WIDTH-1:STEP_SHIFT]};
 ///////////////////////////////////////////////////////////////////////////
 // FSM ////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////
-always @(posedge clk_i) begin
-	if(!rst_ni) begin
+always @(posedge clk) begin
+	if(!rst) begin
 		x <= 32'h0;
 		y <= INITIAL;
 		z <= 32'h0;

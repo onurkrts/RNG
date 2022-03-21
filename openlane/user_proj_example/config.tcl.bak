@@ -28,7 +28,10 @@ set ::env(DESIGN_IS_CORE) 0
 
 set ::env(CLOCK_PORT) "wb_clk_i"
 set ::env(CLOCK_NET) "rng_chaos.clk"
-set ::env(CLOCK_PERIOD) "10"
+set ::env(CLOCK_PERIOD) "20"
+
+set ::env(FP_SIZING) absolute
+set ::env(DIE_AREA) "0 0 900 600"
 
 set ::env(FP_PIN_ORDER_CFG) $script_dir/pin_order.cfg
 
@@ -48,31 +51,11 @@ set ::env(RT_MAX_LAYER) {met4}
 set ::env(VDD_NETS) [list {vccd1}]
 set ::env(GND_NETS) [list {vssd1}]
 
-
-##################################################################
-# Flow Control
-##################################################################
 set ::env(DIODE_INSERTION_STRATEGY) 4 
 # If you're going to use multiple power domains, then disable cvc run.
-set ::env(RUN_CVC) 1
+set ::env(RUN_CVC) 0
 
-
-##################################################################
-# Synthesis
-##################################################################
-set ::env(SYNTH_STRATEGY) {AREA 1}
-set ::env(SYNTH_MAX_FANOUT) 3
-
-
-##################################################################
-# Floorplanning
-##################################################################
-set ::env(FP_SIZING) absolute
-set ::env(DIE_AREA) "0 0 1200 600"
-set ::env(FP_CORE_UTIL) 35
-set ::env(DESIGN_IS_CORE) 0
-set ::env(FP_PDN_VPITCH) 100
-
+set ::env(SYNTH_USE_PG_PINS_DEFINES) "USE_POWER_PINS"
 
 ##################################################################
 # Placement
@@ -91,30 +74,3 @@ set ::env(PL_RESIZER_HOLD_MAX_BUFFER_PERCENT) 70
 set ::env(PL_RESIZER_ALLOW_SETUP_VIOS) 1
 set ::env(PL_RESIZER_HOLD_SLACK_MARGIN) 0.2
 set ::env(PL_RESIZER_MAX_WIRE_LENGTH) 300
-
-
-##################################################################
-# Global Routing
-##################################################################
-set ::env(GLB_RT_ANT_ITERS) 10
-set ::env(GLOBAL_ROUTER) fastroute
-set ::env(GLB_RESIZER_TIMING_OPTIMIZATIONS) 1
-set ::env(GLB_RESIZER_ALLOW_SETUP_VIOS) 1
-set ::env(GLB_RESIZER_HOLD_SLACK_MARGIN) 1.7
-set ::env(GLB_RESIZER_HOLD_MAX_BUFFER_PERCENT) 75
-
-
-##################################################################
-# Antenna Diodes Insertion
-##################################################################
-set ::env(DIODE_PADDING) 2
-set ::env(DIODE_INSERTION_STRATEGY) 3
-
-
-##################################################################
-# Detailed Routing
-##################################################################
-
-set ::env(DETAILED_ROUTER) tritonroute
-set ::env(ROUTING_CORES) 8
-set ::env(DRT_OPT_ITERS) 64

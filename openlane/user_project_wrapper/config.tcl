@@ -38,10 +38,10 @@ set ::env(VERILOG_FILES) "\
 	$script_dir/../../verilog/rtl/user_project_wrapper.v"
 
 ## Clock configurations
-set ::env(CLOCK_PORT) "user_clock2"
-set ::env(CLOCK_NET) "mprj.clk"
+set ::env(CLOCK_PORT) "wb_clk_i"
+set ::env(CLOCK_NET) "mprj.wb_clk_i"
 
-set ::env(CLOCK_PERIOD) "10"
+set ::env(CLOCK_PERIOD) "20"
 
 ## Internal Macros
 ### Macro PDN Connections
@@ -62,6 +62,10 @@ set ::env(EXTRA_LEFS) "\
 set ::env(EXTRA_GDS_FILES) "\
 	$script_dir/../../gds/user_proj_example.gds"
 
+
+set ::env(VDD_NETS) "vccd1"
+set ::env(GND_NETS) "vssd1"
+
 # set ::env(GLB_RT_MAXLAYER) 5
 set ::env(RT_MAX_LAYER) {met5}
 
@@ -69,26 +73,18 @@ set ::env(RT_MAX_LAYER) {met5}
 # any issue with pdn connections will be flagged with LVS so it is not a critical check.
 set ::env(FP_PDN_CHECK_NODES) 0
 
-set ::env(FP_PDN_ENABLE_MACROS_GRID) "1"
-
-set ::env(VDD_NETS) "vccd1 vccd2 vdda1 vdda2"
-set ::env(GND_NETS) "vssd1 vssd2 vssa1 vssa2"
-
-set ::env(PL_RANDOM_GLB_PLACEMENT) 0
+# The following is because there are no std cells in the example wrapper project.
+set ::env(SYNTH_TOP_LEVEL) 1
+set ::env(PL_RANDOM_GLB_PLACEMENT) 1
 
 set ::env(PL_RESIZER_DESIGN_OPTIMIZATIONS) 0
 set ::env(PL_RESIZER_TIMING_OPTIMIZATIONS) 0
-set ::env(PL_RESIZER_BUFFER_INPUT_PORTS) 1
-set ::env(PL_RESIZER_BUFFER_OUTPUT_PORTS) 1
-set ::env(PL_RESIZER_MAX_WIRE_LENGTH) 300
-
-set ::env(DETAILED_ROUTER) tritonroute
-set ::env(ROUTING_CORES) 8
-set ::env(DRT_OPT_ITERS) 10
+set ::env(PL_RESIZER_BUFFER_INPUT_PORTS) 0
+set ::env(PL_RESIZER_BUFFER_OUTPUT_PORTS) 0
 
 set ::env(FP_PDN_ENABLE_RAILS) 0
 
 set ::env(DIODE_INSERTION_STRATEGY) 0
-set ::env(FILL_INSERTION) 1
-set ::env(TAP_DECAP_INSERTION) 1
-set ::env(CLOCK_TREE_SYNTH) 1
+set ::env(FILL_INSERTION) 0
+set ::env(TAP_DECAP_INSERTION) 0
+set ::env(CLOCK_TREE_SYNTH) 0
