@@ -41,7 +41,9 @@ set ::env(VERILOG_FILES) "\
 set ::env(CLOCK_PORT) "wb_clk_i"
 set ::env(CLOCK_NET) "mprj.wb_clk_i"
 
-set ::env(CLOCK_PERIOD) "20"
+set ::env(CLOCK_PERIOD) "50"
+
+set ::env(ROUTING_CORES) {6}
 
 ## Internal Macros
 ### Macro PDN Connections
@@ -62,16 +64,15 @@ set ::env(EXTRA_LEFS) "\
 set ::env(EXTRA_GDS_FILES) "\
 	$script_dir/../../gds/user_proj_example.gds"
 
-
-set ::env(VDD_NETS) "vccd1"
-set ::env(GND_NETS) "vssd1"
-
 # set ::env(GLB_RT_MAXLAYER) 5
-set ::env(RT_MAX_LAYER) {met5}
+set ::env(RT_MAX_LAYER) {met4}
 
 # disable pdn check nodes becuase it hangs with multiple power domains.
 # any issue with pdn connections will be flagged with LVS so it is not a critical check.
 set ::env(FP_PDN_CHECK_NODES) 0
+
+set ::env(VDD_NETS) [list {vccd1}]
+set ::env(GND_NETS) [list {vssd1}]
 
 # The following is because there are no std cells in the example wrapper project.
 set ::env(SYNTH_TOP_LEVEL) 1
