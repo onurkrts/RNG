@@ -221,12 +221,6 @@ localparam STEP_SHIFT = 6; // <-- 1/h = 2 ^ -STEP_SHIFT
 localparam FRAC_WIDTH = WIDTH - INT_WIDTH;
 localparam INITIAL = { {INT_WIDTH-1{1'b0}}, 1'b1, {FRAC_WIDTH{1'b0}} };
 
-// state Reg
-// reg [WIDTH-1:0] x;
-// reg [WIDTH-1:0] y;
-// reg [WIDTH-1:0] z;
-
-
 // wires
 wire [WIDTH-1:0] xn;
 wire [WIDTH-1:0] yn;

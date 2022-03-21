@@ -1,10 +1,15 @@
-# Caravel User Project
-
-[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0) [![UPRJ_CI](https://github.com/efabless/caravel_project_example/actions/workflows/user_project_ci.yml/badge.svg)](https://github.com/efabless/caravel_project_example/actions/workflows/user_project_ci.yml) [![Caravel Build](https://github.com/efabless/caravel_project_example/actions/workflows/caravel_build.yml/badge.svg)](https://github.com/efabless/caravel_project_example/actions/workflows/caravel_build.yml)
-
-| :exclamation: Important Note            |
-|-----------------------------------------|
-
-## Please fill in your project documentation in this README.md file 
+# Chaotic RNG Design.
 
 Chaotic RNG Design.
+
+
+References:
+------------
+
+[1]	M. A. Zidan, A. G. Radwan, and K. N. Salama, â€œRandom Number Generation
+	Based on Digital Differential Chaos, â€?IEEE International Midwest 
+	Symposium on Circuits and Systems (MWSCAS), Seoul, South Korea, 2011
+ 	
+[2]	M. A. Zidan, A. G. Radwan, and K. N. Salama, â€œThe Effect of Numerical 
+	Techniques on Differential Equation Based Chaotic Generators,â€?IEEE 
+	International Conference on Microelectronics (ICM), Tunisia, 2011
