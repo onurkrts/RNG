@@ -1,15 +1,15 @@
-# Chaotic RNG Design.
+# RNG CHAOS
 
-Chaotic RNG Design.
+Fully digital differential chaos based random number generator.
 
 
 References:
 ------------
 
-[1]	M. A. Zidan, A. G. Radwan, and K. N. Salama, â€œRandom Number Generation
-	Based on Digital Differential Chaos, â€?IEEE International Midwest 
-	Symposium on Circuits and Systems (MWSCAS), Seoul, South Korea, 2011
+[1]	Zidan, M. Affan, Ahmed Gomaa Radwan, and Khaled Nabil Salama. 
+"Random number generation based on digital differential chaos." 
+2011 IEEE 54th International Midwest Symposium on Circuits and Systems (MWSCAS). IEEE, 2011.
  	
-[2]	M. A. Zidan, A. G. Radwan, and K. N. Salama, â€œThe Effect of Numerical 
-	Techniques on Differential Equation Based Chaotic Generators,â€?IEEE 
-	International Conference on Microelectronics (ICM), Tunisia, 2011
+[2]	Zidan, M. Affan, Ahmed Gomaa Radwan, and Khaled Nabil Salama. 
+"The effect of numerical techniques on differential equation based chaotic generators." 
+ICM 2011 Proceeding. IEEE, 2011.

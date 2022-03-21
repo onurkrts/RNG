@@ -29,12 +29,12 @@ set ::env(DESIGN_IS_CORE) 0
 
 set ::env(CLOCK_PORT) "wb_clk_i"
 set ::env(CLOCK_NET) "rng_chaos.clk"
-set ::env(CLOCK_PERIOD) "30"
+set ::env(CLOCK_PERIOD) "25"
 
 set ::env(ROUTING_CORES) {6}
 
 set ::env(FP_SIZING) absolute
-set ::env(DIE_AREA) "0 0 600 600"
+set ::env(DIE_AREA) "0 0 1000 1000"
 
 set ::env(FP_PIN_ORDER_CFG) $script_dir/pin_order.cfg
 
