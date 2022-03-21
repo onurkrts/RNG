@@ -4,7 +4,6 @@ precheck_results
 *.vcd
 *.gtkw
 *.vvp
-*.bak
 mgmt_core_wrapper
 caravel
 mgmt_core_wrapper
